@@ -1045,3 +1045,65 @@ body.is-locked { overflow: hidden; }
 
 /* ---------- 21. Film grain texture ---------- */
 :root{--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E")}
+
+/* ---------- 22. Interior pages (contact) ---------- */
+.page-head {
+  position: relative;
+  padding-top: clamp(7.5rem, 13vw, 10.5rem);
+  padding-bottom: clamp(2rem, 5vw, 3.5rem);
+  overflow: hidden;
+  isolation: isolate;
+}
+.page-head__glow {
+  position: absolute; inset: -60% -20% auto -20%; height: 150%;
+  background:
+    radial-gradient(38% 46% at 24% 38%, rgb(201 169 97 / 0.20), transparent 64%),
+    radial-gradient(34% 42% at 76% 56%, rgb(140 35 55 / 0.16), transparent 66%);
+  filter: blur(26px); z-index: -1; pointer-events: none;
+  animation: aurora 26s var(--e-soft) infinite alternate;
+}
+.page-head__title { font-size: var(--t-xxl); margin: 1.25rem 0 1.25rem; }
+.page-head__lede { color: var(--fg-mute); max-width: 48ch; }
+
+/* Contact channel cards */
+.contact-cards { display: grid; gap: clamp(1rem, 2.2vw, 1.35rem); }
+@media (min-width: 40rem) { .contact-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 68rem) { .contact-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+.ccard {
+  position: relative;
+  display: flex; flex-direction: column; gap: 0.55rem;
+  padding: clamp(1.35rem, 3vw, 1.9rem);
+  min-height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(160deg, rgb(255 255 255 / 0.065), rgb(255 255 255 / 0.02));
+  border: 1px solid rgb(255 255 255 / 0.11);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  transition: transform 0.5s var(--e-out), border-color 0.5s var(--e-out);
+}
+a.ccard:hover, a.ccard:focus-visible { transform: translateY(-5px); border-color: rgb(235 216 168 / 0.4); }
+.ccard__ico { width: 1.6rem; height: 1.6rem; color: var(--gold-lt); margin-bottom: 0.35rem; }
+.ccard__k {
+  font-size: var(--t-label); letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
+}
+.ccard__v {
+  font-family: var(--f-display); font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+  line-height: 1.25; font-style: normal;
+}
+.ccard__n { font-size: var(--t-sm); color: var(--fg-mute); }
+a.ccard .ccard__v { transition: color 0.35s var(--e-out); }
+a.ccard:hover .ccard__v { color: var(--gold-lt); }
+
+/* Address block */
+.addr-grid { display: grid; gap: clamp(2rem, 5vw, 3.5rem); align-items: start; }
+@media (min-width: 60rem) { .addr-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2.5rem, 6vw, 5rem); } }
+.addr {
+  font-family: var(--f-display);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1.4;
+  font-style: normal;
+  margin-block: 1.25rem 1.75rem;
+}
+.addr span { display: block; }
+.addr .pin { color: var(--gold-lt); }

@@ -275,7 +275,7 @@
   }
 
   function setLightbox(open, from) {
-    if (open === lbOpen) return;
+    if (!lb || open === lbOpen) return;
     lbOpen = open;
     lb.classList.toggle('is-open', open);
     document.body.classList.toggle('is-locked', open);
@@ -291,11 +291,14 @@
     }
   }
 
-  looks.forEach((btn, i) => btn.addEventListener('click', () => { lbShow(i); setLightbox(true, btn); }));
-  $('#lb-close').addEventListener('click', () => setLightbox(false));
-  $('#lb-prev').addEventListener('click', () => lbShow(lbIndex - 1));
-  $('#lb-next').addEventListener('click', () => lbShow(lbIndex + 1));
-  lb.addEventListener('click', e => { if (e.target === lb) setLightbox(false); });
+  // Interior pages (contact, etc.) reuse this script but have no gallery.
+  if (lb && looks.length) {
+    looks.forEach((btn, i) => btn.addEventListener('click', () => { lbShow(i); setLightbox(true, btn); }));
+    $('#lb-close').addEventListener('click', () => setLightbox(false));
+    $('#lb-prev').addEventListener('click', () => lbShow(lbIndex - 1));
+    $('#lb-next').addEventListener('click', () => lbShow(lbIndex + 1));
+    lb.addEventListener('click', e => { if (e.target === lb) setLightbox(false); });
+  }
 
   addEventListener('keydown', e => {
     if (e.key === 'Escape') {
